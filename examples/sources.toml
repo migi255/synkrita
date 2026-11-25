@@ -1,0 +1,13 @@
+# Discovery is permitted. Invocation is disabled until actual schemas and the
+# read-only operation are reviewed and explicit tool names are added locally.
+[sources.glygen]
+endpoint = "https://mcp.glygen.org/mcp"
+view = "public"
+allowed_operations = []
+timeout_seconds = 10
+
+[sources.biomarkerkb]
+endpoint = "https://mcp.biomarkerkb.org/mcp"
+view = "public"
+allowed_operations = []
+timeout_seconds = 10

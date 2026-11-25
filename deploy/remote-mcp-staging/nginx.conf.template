@@ -1,0 +1,68 @@
+# Include once in the http context of a dedicated staging ingress.
+# Render __STAGING_HOST__ with the approved lowercase DNS name.
+# Apply the approved network allowlist before enabling this listener.
+limit_req_zone $binary_remote_addr zone=synkrita_stage_peer:1m rate=5r/s;
+limit_req_zone $server_name zone=synkrita_stage_total:1m rate=15r/s;
+limit_conn_zone $server_name zone=synkrita_stage_connections:1m;
+
+server {
+    listen 443 ssl default_server;
+    server_name _;
+    ssl_reject_handshake on;
+}
+
+server {
+    listen 443 ssl;
+    server_name __STAGING_HOST__;
+
+    ssl_certificate /etc/synkrita-staging/tls/fullchain.pem;
+    ssl_certificate_key /etc/synkrita-staging/tls/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_session_tickets off;
+    server_tokens off;
+
+    access_log off;
+    error_log /var/log/nginx/synkrita-staging-error.log crit;
+    client_max_body_size 16k;
+    client_header_buffer_size 1k;
+    large_client_header_buffers 2 8k;
+    client_header_timeout 5s;
+    client_body_timeout 5s;
+    keepalive_timeout 10s;
+    limit_req zone=synkrita_stage_peer burst=10 nodelay;
+    limit_req zone=synkrita_stage_total burst=20 nodelay;
+    limit_req_status 429;
+    limit_conn synkrita_stage_connections 24;
+    limit_conn_status 429;
+
+    add_header Strict-Transport-Security "max-age=86400" always;
+
+    proxy_http_version 1.1;
+    proxy_set_header Host $http_host;
+    proxy_set_header Connection "";
+    proxy_set_header Forwarded "";
+    proxy_set_header X-Forwarded-For "";
+    proxy_set_header X-Forwarded-Host "";
+    proxy_set_header X-Forwarded-Proto "";
+    proxy_set_header X-Real-IP "";
+    proxy_intercept_errors off;
+    proxy_redirect off;
+    proxy_cache off;
+    proxy_next_upstream off;
+    proxy_buffering off;
+    proxy_connect_timeout 2s;
+    proxy_send_timeout 5s;
+    proxy_read_timeout 10s;
+
+    location = /mcp {
+        proxy_pass http://127.0.0.1:8765;
+    }
+
+    location = /.well-known/oauth-protected-resource/mcp {
+        proxy_pass http://127.0.0.1:8765;
+    }
+
+    location / {
+        return 404;
+    }
+}

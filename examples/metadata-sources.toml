@@ -1,0 +1,13 @@
+# Narrow opt-in policy for the first response observations.
+# This permits only a release-metadata read; no scientific search/detail tools.
+[sources.glygen]
+endpoint = "https://mcp.glygen.org/mcp"
+view = "public"
+allowed_operations = ["get_release_info"]
+timeout_seconds = 10
+
+[sources.biomarkerkb]
+endpoint = "https://mcp.biomarkerkb.org/mcp"
+view = "public"
+allowed_operations = ["get_release_info"]
+timeout_seconds = 10

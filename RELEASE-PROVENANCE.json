@@ -1,0 +1,7 @@
+{
+  "version": "0.1.0.post2",
+  "verified_input_revision": "b79f1cad1e1ae2a5e30c3fbbe9f53350b9ab84eb",
+  "projection": "History-free source publication snapshot",
+  "scope": "Runtime source and runtime dependency wheel lock preserved byte-for-byte. Publication changes cover metadata, documentation, notices and their inclusion in packaging.",
+  "verification_boundary": "Local package and synthetic behavior checks are separate from host acceptance and release authorization."
+}

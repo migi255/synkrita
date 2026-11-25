@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "synkrita"
+version = "0.1.0.post2"
+description = "Evidence-backed intelligence across independent data sources"
+requires-python = ">=3.11"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md", "third-party/LICENSES.txt"]
+dependencies = ["mcp==1.30.0", "httpx>=0.28,<1", "jsonschema>=4.23,<5", "PyJWT[crypto]>=2.13,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+synkrita = "synkrita.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["transport: real process or HTTP transport tests; never replaced with mocks"]

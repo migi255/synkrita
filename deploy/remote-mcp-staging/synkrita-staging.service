@@ -1,0 +1,39 @@
+[Unit]
+Description=Synkrita synthetic MCP staging
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60s
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=synkrita-staging
+Group=synkrita-staging
+UMask=0077
+StateDirectory=synkrita-staging
+StateDirectoryMode=0700
+WorkingDirectory=/opt/synkrita-staging
+ExecStart=/opt/synkrita-staging/venv/bin/python -m synkrita remote-mcp serve --database /var/lib/synkrita-staging/staging.sqlite --config /etc/synkrita-staging/oauth.json
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectHome=yes
+ProtectSystem=strict
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryMax=512M
+CPUQuota=100%
+TasksMax=64
+LimitNOFILE=512
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+{
+  "issuer": "https://tenant.example.invalid/",
+  "resource": "https://research.example.invalid/mcp",
+  "jwks_url": "https://tenant.example.invalid/.well-known/jwks.json",
+  "clients": ["chatgpt-client-id", "claude-client-id"],
+  "max_token_age": 900,
+  "self_registration": false
+}
