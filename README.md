@@ -10,6 +10,10 @@ Synkrita is a self-hosted Python MCP service for reading scientific evidence and
 
 The hosted API has no public search, write, administration, or arbitrary scientific invocation tool. A qualified decision applies to its reviewed use and evidence. Provenance and schema checks do not establish scientific truth, completeness, or current upstream contents. Coverage reports describe attributable worker requests. Edge-only and unattributed traffic are measured separately. This is a single-worker SQLite service. Live OAuth acceptance, capacity, target isolation and alert delivery depend on the deployment.
 
+## Knowledge model and example
+
+See the [knowledge model](docs/KNOWLEDGE_MODEL.md) for how Synkrita separates evidence, capability Findings, and qualified decisions. Run the [study-lineage example](docs/STUDY_LINEAGE_EXAMPLE.md) to follow two synthetic records from collection through scoped approval and retrieval by a second account.
+
 ## Install from source
 
 With an approved Python package index or mirror and Python 3.11 or later, run from the checkout root.
